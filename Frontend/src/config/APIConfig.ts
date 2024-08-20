@@ -1,11 +1,16 @@
+
+const apiPROTOCOL = import.meta.env.VITE_PROTOCOL;
+const apiHOST = import.meta.env.VITE_HOST;
+
+
+
 const APIConfig = {
-    protocol: "http",
-    host: "localhost",
-    port: 8111,
+    protocol: apiPROTOCOL,
+    host: apiHOST,
     basePath: "",
   
     baseURL() {
-      return `${this.protocol}://${this.host}:${this.port}${this.basePath}`;
+      return `${this.protocol}://${this.host}${this.basePath}`;
     },
   };
   

@@ -1,8 +1,13 @@
 import APIConfig from "../../config/APIConfig.ts";
 import axios, { AxiosInstance } from "axios";
 
+const apiPROTOCOL = import.meta.env.VITE_PROTOCOL;
+const apiHOST = import.meta.env.VITE_HOST;
+
 export default class AuthService {
   private client: AxiosInstance;
+
+  private API_url = `${apiPROTOCOL}://${apiHOST}`
 
   constructor() {
     this.client = axios.create({
@@ -39,7 +44,7 @@ export default class AuthService {
 
   async getUser(token: string|null): Promise<void> {
     try {
-        const response = await fetch("http://localhost:8111/api/user", {
+        const response = await fetch(`${this.API_url}/api/user`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -59,7 +64,7 @@ export default class AuthService {
 
 async createTodo(token: string|null, name: string): Promise<void> {
     try {
-        const response = await fetch("http://localhost:8111/api/item", {
+        const response = await fetch(`${this.API_url}/api/item`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -82,7 +87,7 @@ async createTodo(token: string|null, name: string): Promise<void> {
 
 async removeTodo(token: string|null, id: string): Promise<void> {
     try {
-        const response = await fetch("http://localhost:8111/api/item", {
+        const response = await fetch(`${this.API_url}/api/item`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -105,7 +110,7 @@ async removeTodo(token: string|null, id: string): Promise<void> {
 
 async markTodo(token: string|null, id: string, completed: boolean): Promise<void> {
     try {
-        const response = await fetch("http://localhost:8111/api/item/completed", {
+        const response = await fetch(`${this.API_url}/api/item/completed`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -127,7 +132,7 @@ async markTodo(token: string|null, id: string, completed: boolean): Promise<void
 
 async fetchWithToken(token: string|null): Promise<void> {
     try {
-        const response = await fetch("http://localhost:8111/api/user/todolist", {
+        const response = await fetch(`${this.API_url}/api/user/todolist`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
