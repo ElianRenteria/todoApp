@@ -36,4 +36,115 @@ export default class AuthService {
       name
     });
   }
+
+  async getUser(token: string|null): Promise<void> {
+    try {
+        const response = await fetch("http://localhost:8111/api/user", {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json', 
+            },
+        })
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        const data = await response.json()
+        console.log('Data:', data)
+        return data.name
+    } catch (error) {
+        console.error('Error:', error)
+    }
+}
+
+async createTodo(token: string|null, name: string): Promise<void> {
+    try {
+        const response = await fetch("http://localhost:8111/api/item", {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json', 
+            },
+            body: JSON.stringify({
+                title: name
+            })
+        })
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        const data = await response.json()
+        console.log('Data:', data)
+        return data.name
+    } catch (error) {
+        console.error('Error:', error)
+    }
+}
+
+async removeTodo(token: string|null, id: string): Promise<void> {
+    try {
+        const response = await fetch("http://localhost:8111/api/item", {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json', 
+            },
+            body: JSON.stringify({
+                id: id
+            })
+        })
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        const data = await response.json()
+        console.log('Data:', data)
+        return
+    } catch (error) {
+        console.error('Error:', error)
+    }
+}
+
+async markTodo(token: string|null, id: string, completed: boolean): Promise<void> {
+    try {
+        const response = await fetch("http://localhost:8111/api/item/completed", {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json', 
+            },
+            body: JSON.stringify({
+                id: id,
+                completed: !completed
+            })
+        })
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        return
+    } catch (error) {
+        console.error('Error:', error)
+    }
+}
+
+async fetchWithToken(token: string|null): Promise<void> {
+    try {
+        const response = await fetch("http://localhost:8111/api/user/todolist", {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        })
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        const data = await response.json()
+        console.log('Data:', data)
+        return data
+    } catch (error) {
+        console.error('Error:', error)
+    }
+}
+
+
 }

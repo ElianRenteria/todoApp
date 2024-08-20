@@ -49,7 +49,7 @@
     const { setToken, isTokenExpired } = useToken();
 
     const signup = async () => {
-        if (!form.username || !form.password || !form.confirm_password) {
+        if (!form.username || !form.password || !form.confirm_password || !form.name) {
             errorMessage.value = "Please fill all fields"
             return
         }

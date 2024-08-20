@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 router.get('/user/todolist', getTodoList)
 router.post('/user/name', changeName)
 router.post('/user/password', changePassword)
-router.post('/me', authenticate)
+router.get('/user', authenticate)
 
 // todoItem
 router.post('/item', createTodo)

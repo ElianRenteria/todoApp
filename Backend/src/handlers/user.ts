@@ -22,7 +22,17 @@ export const createNewUser = async (req: any, res: any) => {
 }
 
 export const authenticate = async (req: any, res: any) => {
-    res.json({"username":req.user.username, "name":req.user.name, "id":req.user.id})
+    const user = await prisma.user.findUnique({
+        where: {
+            username: req.user.username,
+        }
+    });
+    if (!user){
+        res.status(401)
+        res.json({message: 'Username does not exist'})
+        return
+    }
+    res.json({"username":user.username, "name":user.name, "id":user.id})
     return
 }
 

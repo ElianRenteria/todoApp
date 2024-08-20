@@ -73,7 +73,7 @@ export const updateTodoCompleted = async (req: any, res: any) => {
         res.json({message: 'id is required'})
         return
     }
-    if (!req.body.completed){
+    if (req.body.completed === undefined || req.body.completed === null){
         res.status(400)
         res.json({message: 'completed is required'})
         return
