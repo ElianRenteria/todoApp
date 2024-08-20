@@ -1,17 +1,20 @@
-# Use a base image for Node.js that is compatible with ARM processors
-FROM arm32v7/node:18-alpine
+FROM arm64v8/node:18-alpine
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy the package.json and package-lock.json (if available) to the container
-COPY package*.json ./
-
 # Install dependencies
+COPY package*.json ./
 RUN npm install
+
+# Install Prisma CLI globally
+RUN npm install -g prisma
 
 # Copy the rest of the application code to the container
 COPY . .
 
-# Command to run the application
+# Generate Prisma client
+RUN npx prisma generate
+
+# Start the application
 CMD ["npm", "start"]
