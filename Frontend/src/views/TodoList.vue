@@ -40,8 +40,8 @@
                     </div>
                     <div class="list">
                         <div v-if="errorMessage" class="error-text mt-2 mb-3" style="text-align: center;">{{ errorMessage }}</div>
-                        <DataTable v-model:selection="selectedTodo" selectionMode="single" dataKey="id" :value="todoList" stripedRows tableStyle="width: 100%" class="m-5" size="large">
-                            <Column field="title" header="Name" style="width: 80%"sortable></Column>
+                        <DataTable v-model:selection="selectedTodo" sortField="completed" :sortOrder="1" selectionMode="single" dataKey="id" :value="todoList_display" stripedRows tableStyle="width: 100%" class="m-5" size="large">
+                            <Column field="title" header="Name" style="width: 80%" sortable></Column>
                             <Column field="completed" header="Status" style="width: 20%" sortable></Column>
                         </DataTable>
                     </div>
@@ -63,6 +63,7 @@
     const errorMessage = ref("")
     const errorMessage2 = ref("")
     const todoList: any = ref<any[]>([])
+    const todoList_display: any = ref<any[]>([])
     const name = ref<any>("")
     const showPopup = ref(false)
     const selectedTodo = ref<any>(null)
@@ -70,6 +71,18 @@
     const form = ref({
         title: ''
     });
+
+    function update_todoList_display() {
+        todoList_display.value = []
+        for (const todo of todoList.value) {
+            todoList_display.value.push({
+                id: todo.id,
+                title: todo.title,
+                completed: todo.completed ? '✔️' : ' ',
+                done: todo.completed
+            })
+        }
+    }
 
     const submitForm = async () => {
         try {
@@ -81,6 +94,7 @@
             if (token) {
                 await service.createTodo(token, form.value.title)
                 todoList.value = await service.fetchWithToken(token)
+                update_todoList_display()
                 form.value.title = ''
                 errorMessage2.value = ""
             } else {
@@ -102,6 +116,7 @@
             if (token) {
                 await service.removeTodo(token, selectedTodo.value.id)
                 todoList.value = await service.fetchWithToken(token)
+                update_todoList_display()
                 errorMessage.value = ""
                 selectedTodo.value = null
             } else {
@@ -120,8 +135,9 @@
             }
             const token = getToken();
             if (token) {
-                await service.markTodo(token, selectedTodo.value.id, selectedTodo.value.completed)
+                await service.markTodo(token, selectedTodo.value.id, selectedTodo.value.done)
                 todoList.value = await service.fetchWithToken(token)
+                update_todoList_display()
                 errorMessage.value = ""
                 selectedTodo.value = null
             } else {
@@ -148,6 +164,7 @@
             const token = getToken()
             if (token) {
                 todoList.value = await service.fetchWithToken(token)
+                update_todoList_display()
                 name.value = await service.getUser(token)
             } else {
                  new Error('No valid token found')
