@@ -28,24 +28,26 @@
             </Card>
         </div>
         <h2>welcome back {{ name }}</h2>
-        <Card>
-            <template #content>
-                <div class="addTodo w-full flex justify-content-between align-items-center">
-                    <Button class="ml-2 mb-3" severity="info" @click="markTodo"><i class="pi pi-check"></i></Button>
-                    <div>
-                        <Button class="mr-2 mb-3" severity="danger" @click="deleteTodo"><i class="pi pi-trash"></i></Button>
-                        <Button class="mr-1 mb-3" severity="success" @click="showPopup = true"><i class="pi pi-plus"></i></Button>
+        <div class="m-0 mb-5 p-0 w-full h-full flex flex-column justify-content-start align-items-center">
+            <Card class="w-10 h-full">
+                <template #content>
+                    <div class="addTodo w-full flex justify-content-between align-items-center">
+                        <Button class="ml-2 mb-3" severity="info" @click="markTodo"><i class="pi pi-check"></i></Button>
+                        <div>
+                            <Button class="mr-2 mb-3" severity="danger" @click="deleteTodo"><i class="pi pi-trash"></i></Button>
+                            <Button class="mr-1 mb-3" severity="success" @click="showPopup = true"><i class="pi pi-plus"></i></Button>
+                        </div>
                     </div>
-                </div>
-                <div class="list">
-                    <div v-if="errorMessage" class="error-text mt-2 mb-3" style="text-align: center;">{{ errorMessage }}</div>
-                    <DataTable v-model:selection="selectedTodo" selectionMode="single" dataKey="id" :value="todoList" stripedRows tableStyle="min-width: 50rem" class="m-5" size="large">
-                        <Column field="title" header="Name" sortable></Column>
-                        <Column field="completed" header="Status" sortable></Column>
-                    </DataTable>
-                </div>
-            </template>
-        </Card>
+                    <div class="list">
+                        <div v-if="errorMessage" class="error-text mt-2 mb-3" style="text-align: center;">{{ errorMessage }}</div>
+                        <DataTable v-model:selection="selectedTodo" selectionMode="single" dataKey="id" :value="todoList" stripedRows tableStyle="width: 100%" class="m-5" size="large">
+                            <Column field="title" header="Name" style="width: 80%"sortable></Column>
+                            <Column field="completed" header="Status" style="width: 20%" sortable></Column>
+                        </DataTable>
+                    </div>
+                </template>
+            </Card>
+        </div>
     </div>
 </template>
 <script setup lang="ts">
@@ -204,7 +206,6 @@
         z-index: 1000;
     }
     .list {
-        max-height: 64vh;
         overflow: auto;
     }
 </style>
