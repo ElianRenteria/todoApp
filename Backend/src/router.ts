@@ -1,5 +1,5 @@
 import Router from 'express'
-import { getTodoList, changeName, changePassword } from './handlers/user'
+import { getTodoList, changeName, changePassword, authenticate } from './handlers/user'
 import { createTodo, deleteTodo, updateTodoCompleted, updateTodoTitle } from './handlers/todo'
 const router = Router()
 
@@ -12,6 +12,7 @@ router.get('/', (req, res) => {
 router.get('/user/todolist', getTodoList)
 router.post('/user/name', changeName)
 router.post('/user/password', changePassword)
+router.post('/me', authenticate)
 
 // todoItem
 router.post('/item', createTodo)

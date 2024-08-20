@@ -19,7 +19,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('./views/Register.vue')
   },
   { 
-    path: '/App', 
+    path: '/app', 
     name: 'app',
     component: () => import('./views/TodoList.vue'),
     meta: {

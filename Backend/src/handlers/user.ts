@@ -21,6 +21,11 @@ export const createNewUser = async (req: any, res: any) => {
     }
 }
 
+export const authenticate = async (req: any, res: any) => {
+    res.json({"username":req.user.username, "name":req.user.name, "id":req.user.id})
+    return
+}
+
 export const signIn = async (req: any, res: any) =>{
     const user = await prisma.user.findUnique({
         where: {
@@ -30,7 +35,7 @@ export const signIn = async (req: any, res: any) =>{
 
     if (!user){
         res.status(401)
-        res.json({message: 'Unauthorized'})
+        res.json({message: 'Username does not exist'})
         return
     }
 
@@ -38,12 +43,16 @@ export const signIn = async (req: any, res: any) =>{
 
     if (!isValid){
         res.status(401)
-        res.json({message: 'Unauthorized'})
+        res.json({message: 'Password is incorrect'})
         return
     }
 
     const token = createJWT(user)
     res.json({ token })
+}
+
+export const logOut = async (req: any, res: any) => {
+    res.json({message: 'Logged out'})
 }
 
 export const getTodoList = async (req: any, res: any) => {
