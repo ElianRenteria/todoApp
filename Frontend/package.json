@@ -26,6 +26,7 @@
     "primeicons": "^7.0.0",
     "primevue": "^4.0.4",
     "qrcode": "^1.5.4",
+    "rollup": "^4.21.0",
     "sortablejs": "^1.15.2",
     "universal-cookie": "^7.2.0",
     "unplugin-auto-import": "^0.18.2",
