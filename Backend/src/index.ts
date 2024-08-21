@@ -10,11 +10,14 @@ dotenv.config()
 
 const app = express()
 
+
 // MIDDLEWARE
-app.use(cors({origin: ['https://coderlab.work', 'http://localhost:5173'], methods: "GET,POST,PUT,DELETE"}))
-app.use(morgan('dev'))
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(cors({
+    origin: ['http://localhost:5173', process.env.URL ?? ''], // Replace with your frontend URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE']
+}))
+
+app.options('*', cors())
 
 
 app.use('/api', protect, router)

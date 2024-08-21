@@ -1,13 +1,11 @@
 import APIConfig from "../../config/APIConfig.ts";
 import axios, { AxiosInstance } from "axios";
 
-const apiPROTOCOL = import.meta.env.VITE_PROTOCOL;
-const apiHOST = import.meta.env.VITE_HOST;
-
 export default class AuthService {
   private client: AxiosInstance;
-
-  private API_url = `${apiPROTOCOL}://${apiHOST}`
+  private apiPROTOCOL = import.meta.env.VITE_PROTOCOL;
+  private apiHOST = import.meta.env.VITE_HOST;
+  private API_url = `${this.apiPROTOCOL}://${this.apiHOST}`
 
   constructor() {
     this.client = axios.create({
