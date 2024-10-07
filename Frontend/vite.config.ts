@@ -9,6 +9,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "",
   plugins: [
     vue(),
     // Auto-import Vue APIs like `ref`, `computed`, etc.
