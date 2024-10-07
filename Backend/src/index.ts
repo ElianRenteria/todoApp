@@ -13,11 +13,15 @@ const app = express()
 
 // MIDDLEWARE
 app.use(cors({
-    origin: ['http://localhost:5173', process.env.URL ?? ''], // Replace with your frontend URL
-    methods: ['GET', 'POST', 'PUT', 'DELETE']
+	origin: ['https://todo-app-ivory-six.vercel.app', 'todo-app-ivory-six.vercel.app'], // Replace with your frontend URL
+  	methods: ['GET', 'POST', 'PUT', 'DELETE']
 }))
 
 app.options('*', cors())
+
+app.use(morgan('dev'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 
 app.use('/api', protect, router)
