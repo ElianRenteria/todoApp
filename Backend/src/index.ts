@@ -10,8 +10,15 @@ dotenv.config()
 
 const app = express()
 
+
 // MIDDLEWARE
-app.use(cors({origin: ['https://coderlab.work', 'http://localhost:5173'], methods: "GET,POST,PUT,DELETE"}))
+app.use(cors({
+	origin: ['https://elianrenteria.com', 'https://www.elianrenteria.com', 'elianrenteria.com'], // Replace with your frontend URL
+  	methods: ['GET', 'POST', 'PUT', 'DELETE']
+}))
+
+app.options('*', cors())
+
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
