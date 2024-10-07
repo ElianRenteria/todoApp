@@ -13,7 +13,7 @@ const app = express()
 
 // MIDDLEWARE
 app.use(cors({
-	origin: ['https://todo-app-ivory-six.vercel.app', 'todo-app-ivory-six.vercel.app'], // Replace with your frontend URL
+	origin: '*', // Replace with your frontend URL
   	methods: ['GET', 'POST', 'PUT', 'DELETE']
 }))
 
